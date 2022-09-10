@@ -1,42 +1,36 @@
 clc;
 clf;
-%Continuous / Input Signal
-t = 0:0.0001:1;
-f = 2;
+
+f = 3;
 A = 20;
+t = 0:0.0001:1;
 xt = A*sin(2*pi*f*t);
-
 grid on;
-title('Continous / Input Analogue Signal')
-
 subplot(3,1,1);
-plot(t,xt);
-axis([0 t(end) -A-2 A+2])
+plot(t,xt,'black');
+title(['Original Signal Frequency ' num2str(f) 'Hz']);
+axis([0,max(t),-A-10,A+10]);
 
-%Sampling
-Fs = 80; %Sampling at 3x of Input Frequency
+%Up Sampling
+Fs = (40*f);
 n = 0:1/Fs:1;
-xn = A*sin(2*pi*f*n);
+xn=A*sin(2*pi*f*n);
 subplot(3,1,2);
-
 hold on;
-
 stem(n,xn,"b--.");
 plot(n,xn,"black");
-axis([0 n(end) -A-2 A+2])
+axis([0,max(t),-A-10,A+10]);
+title(['Sampling ' num2str(Fs) 'Hz']);
+
+hold off;
 
 % Quantization
-% Formula : (Amx-Amin)/2^N
 no_of_bits = 3;
-total_quantized_level = 2^no_of_bits;
-A_max = max(xn);
-A_min = min(xn);
-step_size = (A_max - A_min)/total_quantized_level;
-xn
-xq = round(xn/step_size)*step_size
-
+total_level = 2^no_of_bits;
+step_size = (max(xn)-min(xn))/total_level;
+xq = (round(xn/step_size))*step_size;
 
 subplot(3,1,3);
-plot(n,xq,"r");
-grid on;
-axis([0,t(end),A_min-4,A_max+4])
+plot(n,xq,'LineWidth',3);
+axis([0,max(t),-A-10,A+10]);
+title(['Quanztization in ' num2str(no_of_bits) ' Bit/s']);
