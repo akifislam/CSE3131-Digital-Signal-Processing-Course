@@ -18,5 +18,11 @@ for n = 1:size
     end
 end
 
-stem(output,'black','LineWidth',2);
-axis([0,size+5,min(output)-5,max(output)+5])
+%From Lowest Point of h(n) or x(n) to LowestPoint+ConvolutionSize 
+% -1,0,1,2,3,4,5 (Total Point = ConvSize = 7)
+
+t = -1:5; %Index of Convolution 
+
+
+stem(t,output,'black','LineWidth',2);
+%axis([0,size+5,min(output)-5,max(output)+5])
