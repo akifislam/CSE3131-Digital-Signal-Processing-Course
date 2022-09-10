@@ -18,4 +18,5 @@ for n = 1:size
     end
 end
 
-stem(output);
+stem(output,'black','LineWidth',2);
+axis([0,size+5,min(output)-5,max(output)+5])
